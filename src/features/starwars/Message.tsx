@@ -6,13 +6,11 @@ interface OwnProps {
 }
 
 export const NoResult = (props: OwnProps) => (
-  <div>
+  <div className="is-full-width">
     <div className="box">
-      <div className="content">
-        <p className={props.className}>
-          {props.message}
-        </p>
-      </div>
+      <p className={props.className}>
+        {props.message}
+      </p>
     </div>
     <br />
   </div>

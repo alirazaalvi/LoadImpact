@@ -167,6 +167,10 @@ small {
   padding: 10px;
 }
 
+.is-full-width {
+  width: 100%
+}
+
 .control {
   box-sizing: border-box;
   clear: both;
