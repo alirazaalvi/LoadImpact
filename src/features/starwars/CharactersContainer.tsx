@@ -4,7 +4,7 @@ import { AppState } from '../../shared/store';
 import { useReduxDispatch } from '../../shared/helpers';
 import { fetchCharacters } from './actions';
 import { Character, SearchInput } from './types';
-import { messagesList } from '../../shared/messages';
+import { messagesList } from  '../../shared/messages';
 import Header from  '../../layout/Header';
 import Message from './Message';
 
@@ -17,16 +17,13 @@ const CharactersContainer = () => {
   const handleSearch = (searchInput: SearchInput) => (reduxDispatch(fetchCharacters(searchInput)));
 
   const characters: Character[] = charactersReducer.characters;
-  const {  apiFetching, noResult } = charactersReducer;
+  const {  activityStatusMessage } = charactersReducer;
 
   let informationMarkup: JSX.Element | null = null;
 
-  if (characters.length === 0 || apiFetching) {
-    let infoMessage = messagesList['homePage'];
-    if (noResult) { infoMessage = messagesList['noResult']; }
-    else if (apiFetching) { infoMessage = messagesList['apiFetch'];}
-
-    informationMarkup = <Message message={infoMessage} />;
+  if (activityStatusMessage || characters.length === 0) {
+    const informationMarkupMessage = activityStatusMessage ? activityStatusMessage : messagesList['homePage'];
+    informationMarkup = <Message message={informationMarkupMessage} />;
   }
 
   const charactersMarkup: JSX.Element[] = characters.map(character => (

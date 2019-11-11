@@ -1,21 +1,18 @@
 import produce from 'immer';
 import { CharactersActionTypes, ActionNames } from './actions';
 import { Character } from './types';
+import { messagesList } from '../../shared/messages';
 
 export interface CharacterState {
   characters: Character[];
   character: Character | null;
-  noResult: boolean;
-  apiFetching: boolean;
-  apiError: string;
+  activityStatusMessage: string;
 }
 
 export const defaultState: CharacterState = {
   characters: [],
   character: null,
-  noResult: false,
-  apiFetching: false,
-  apiError: '',
+  activityStatusMessage: ''
 };
 
 export const reducer = (
@@ -27,13 +24,15 @@ export const reducer = (
   switch(action.type) {
     case ActionNames.FETCH_CHARACTERS_SUCCESS: {
       currentDraft.characters = action.payload.characters;
-      currentDraft.noResult = action.payload.characters.length === 0 ? true : false;
-      currentDraft.apiFetching = false;
+      currentDraft.activityStatusMessage = action.payload.characters.length === 0 ? messagesList['noResult'] : '';
       return;
     }
     case ActionNames.FETCH_CHARACTERS_REQUEST: {
-      currentDraft.noResult = false;
-      currentDraft.apiFetching = true;
+      currentDraft.activityStatusMessage = messagesList['apiFetch'];
+      return;
+    }
+    case ActionNames.FETCH_CHARACTERS_ERROR: {
+      currentDraft.activityStatusMessage = messagesList['apiError'];
       return;
     }
     default: {
