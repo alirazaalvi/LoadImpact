@@ -17,7 +17,7 @@ Getting Started
 The easiest way to get started is to clone the repository:
 ```bash
 # Get the latest snapshot
-git clone https://github.com/alirazaalvi/LoadImpact.git myproject
+git clone https://github.com/alirazaalvi/Spa2.git myproject
 
 # Change directory
 cd myproject
@@ -41,7 +41,7 @@ npm test
 npm run coverage
 
 # Demo page url
-https://alirazaalvi.github.io/LoadImpact/
+https://alirazaalvi.github.io/Spa2/
 ```
 
 Project Structure
