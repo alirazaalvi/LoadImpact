@@ -1,5 +1,5 @@
-# Load Impact
-Sample app for Load Impact test.
+# Spa2
+Single page app.
 
 Table of Contents
 -----------------
