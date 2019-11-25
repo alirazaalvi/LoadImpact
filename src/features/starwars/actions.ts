@@ -3,7 +3,7 @@ import axios, { AxiosResponse, AxiosError } from 'axios';
 import { AppState } from '../../shared/store';
 import { formatApiError } from '../../shared/helpers';
 import { ApiRequest, ApiResponse, ApiError } from '../../shared/AppTypes';
-import { SearchInput, Character, HomeworldDetails, SpeciesDetails } from './types';
+import { SearchInput, Character } from './types';
 
 export enum ActionNames {
   FETCH_CHARACTERS_REQUEST = 'FETCH_CHARACTERS_REQUEST',
@@ -30,14 +30,11 @@ export const fetchCharacters = (searchInput: SearchInput) => {
     try {
       axios.get(`https://swapi.co/api/people/?search=${searchInput.searchText}`)
       .then((response: AxiosResponse) => {
-        const initialCharactersData = response.data.results as Character[];
-        fetchCharactersDetails(initialCharactersData).then(characterWithDetails => {
-          dispatch({
-            type: ActionNames.FETCH_CHARACTERS_SUCCESS,
-            request: null,
-            payload: { characters: characterWithDetails as Character[] },
-          });
-        })
+        dispatch({
+          type: ActionNames.FETCH_CHARACTERS_SUCCESS,
+          request: null,
+          payload: { characters: response.data.results as Character[] },
+        });
       }).catch((error: AxiosError) => {
         dispatch(({
           type: ActionNames.FETCH_CHARACTERS_ERROR,
@@ -54,29 +51,5 @@ export const fetchCharacters = (searchInput: SearchInput) => {
     }
   };
 };
-
-async function fetchCharactersDetails(characters: Character[]) {
-  const processedCharacter: Character[] = [];
-  for(const character of characters) {
-    processedCharacter.push(await fetchSingleCharacterDetails(character));
-  }
-
-  return new Promise((resolve) =>resolve(processedCharacter));
-}
-
-async function fetchSingleCharacterDetails(character: Character): Promise<Character> {
-  const inputCharacter = character;
-  const [homeWorldResponse, speciesResponse] = await Promise.all([
-    axios.get(character.homeworld),
-    axios.get(character.species[0]),
-  ]);
-
-  inputCharacter.homeworldDetails = homeWorldResponse.data as HomeworldDetails;
-  inputCharacter.speciesDetails = speciesResponse.data as SpeciesDetails;
-
-  return new Promise(function(resolve) {
-    resolve(character);
-  });
-}
 
 export type CharactersActionTypes =  Actions;

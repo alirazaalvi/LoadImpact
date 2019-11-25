@@ -11,9 +11,6 @@ interface ComponentProps extends OwnProps { };
 export const HotelListItem = (props: ComponentProps) => {
   const character = props.character;
 
-  const homeWorldName = props.character.homeworldDetails ? props.character.homeworldDetails.name : '';
-  const speciesName = props.character.speciesDetails ? props.character.speciesDetails.name : '';
-
   return (
     <div data-testid="character-item" className="two-column-auto">
       <div className="box">
@@ -21,14 +18,14 @@ export const HotelListItem = (props: ComponentProps) => {
         <div className="row">
           <div className="column">
             <div className="content">
-              <div><small>Name: <span>{homeWorldName}</span></small></div>
-              <div><small>Specie: <span>{speciesName}</span></small></div>
+              <div><small>Birth year: <span>{character.birth_year}</span></small></div>
+              <div><small>Heigth: <span>{character.height}</span></small></div>
             </div>
           </div>
           <div className="column">
             <div className="content">
-              <div><small>Birth year: <span>{character.birth_year}</span></small></div>
               <div><small>Gender: <span>{character.gender}</span></small></div>
+              <div><small>Mass: <span>{character.mass}</span></small></div>
             </div>
           </div>
         </div>

@@ -12,11 +12,9 @@ const character: Character = characters[0];
 test('character item is rendered', () => {
   const { getByText } = render(<BrowserRouter><CharacterListItem character={character} /></BrowserRouter>);
 
-  const homeWorldName = character.homeworldDetails ? character.homeworldDetails.name : '';
-  const speciesName = character.speciesDetails ? character.speciesDetails.name : '';
-
-
   expect(getByText(character.name).innerHTML).toBe(character.name);
-  expect(getByText(homeWorldName).innerHTML).toBe(homeWorldName);
-  expect(getByText(speciesName).innerHTML).toBe(speciesName);
+  expect(getByText(character.gender).innerHTML).toBe(character.gender);
+  expect(getByText(character.birth_year).innerHTML).toBe(character.birth_year);
+  expect(getByText(character.height).innerHTML).toBe(character.height);
+  expect(getByText(character.mass).innerHTML).toBe(character.mass);
 });
